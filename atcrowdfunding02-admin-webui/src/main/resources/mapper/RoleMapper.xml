@@ -72,6 +72,12 @@
     , name
   </sql>
 
+  <select id="selectRoleByKeyword" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from `t_role` where `name` like concat("%",#{keyword},"%")
+  </select>
+
   <select id="selectByExample" parameterType="com.diu.crowd.entity.RoleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

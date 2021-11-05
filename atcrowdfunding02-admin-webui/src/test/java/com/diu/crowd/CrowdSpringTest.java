@@ -1,7 +1,9 @@
 package com.diu.crowd;
 
 import com.diu.crowd.entity.Admin;
+import com.diu.crowd.entity.Role;
 import com.diu.crowd.mapper.AdminMapper;
+import com.diu.crowd.mapper.RoleMapper;
 import com.diu.crowd.service.api.AdminService;
 import com.diu.crowd.utils.CrowdUtil;
 import org.apache.commons.logging.Log;
@@ -68,10 +70,20 @@ public class CrowdSpringTest {
     @Autowired
     public AdminService adminService;
 
+    @Autowired
+    public RoleMapper roleMapper;
+
     @Test
     public void test02() {
         for (int i = 0; i < 351; i++) {
             adminMapper.insert(new Admin(null, "Edith" + i, CrowdUtil.md5("edith123" + i), "伊蒂丝" + i, "edith321" + i + "@gamin.com", "2021-11-04"));
+        }
+    }
+
+    @Test
+    public void test03() {
+        for (int i = 0; i < 351; i++) {
+            roleMapper.insert(new Role(null, "Edwina" + i));
         }
     }
 

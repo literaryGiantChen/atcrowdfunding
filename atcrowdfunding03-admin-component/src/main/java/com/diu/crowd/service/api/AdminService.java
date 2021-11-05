@@ -35,7 +35,7 @@ public interface AdminService {
      * @param userPswd  密码
      * @return admin对象
      */
-    Admin getAdminByLoginAcct(String loginAcct, String userPswd);
+    public Admin getAdminByLoginAcct(String loginAcct, String userPswd);
 
     /**
      * 分页搜索
@@ -45,7 +45,7 @@ public interface AdminService {
      * @param pageSize 分页总数
      * @return
      */
-    PageInfo<Admin> getAdminPageInfo(String keyword, Integer pageNum, Integer pageSize);
+    public PageInfo<Admin> getAdminPageInfo(String keyword, Integer pageNum, Integer pageSize);
 
     /**
      * 删除Id号的数据

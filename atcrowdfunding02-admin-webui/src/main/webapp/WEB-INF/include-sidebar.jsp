@@ -15,7 +15,7 @@
                         </a>
                     </li>
                     <li style="height: 30px;">
-                        <a href="role-pa.html">
+                        <a href="role/to/main/page.html">
                             <i class="glyphicon glyphicon-king"></i> 角色维护
                         </a>
                     </li>

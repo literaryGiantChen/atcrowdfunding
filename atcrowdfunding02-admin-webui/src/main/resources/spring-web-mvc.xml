@@ -45,6 +45,8 @@
 
   <mvc:view-controller path="/admin/to/add/page.html" view-name="admin-add"/>
 
+  <mvc:view-controller path="/role/to/main/page.html" view-name="role-page"/>
+
   <mvc:interceptors>
     <mvc:interceptor>
       <!-- mvc:mapping 配置要拦截的资源 -->
