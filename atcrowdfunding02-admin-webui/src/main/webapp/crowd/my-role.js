@@ -64,7 +64,7 @@ function getPageInfoRemote() {
     var resultEntity = ajaxResult.responseJSON;
 
     // 从resultEntity中获取result属性
-    var result = resultEntity.result;
+    var result = resultEntity.operationResult;
     console.log(result);
 
     // 判断result是否成功
@@ -74,7 +74,7 @@ function getPageInfoRemote() {
     }
 
     // 确认result为成功后获取pageInfo
-    var pageInfo = resultEntity.data;
+    var pageInfo = resultEntity.queryData;
     console.log(pageInfo);
 
     // 返回pageInfo
