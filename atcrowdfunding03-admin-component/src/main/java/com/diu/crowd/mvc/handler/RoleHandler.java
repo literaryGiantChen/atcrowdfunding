@@ -26,7 +26,7 @@ public class RoleHandler {
     }
 
     @ResponseBody
-    @RequestMapping(value = "role/get/page/info.json", method = RequestMethod.POST, produces = {"application/json"})
+    @RequestMapping(value = "role/get/page/info.json", method = RequestMethod.POST)
     public ResultEntity<PageInfo<Role>> getPageInfo(
             // 使用@RequestParam注解的defaultValue属性，指定默认值，在请求中没有携带对应参数时使用默认值
             // keyword默认值使用空字符串，和SQL语句配合实现两种情况适配

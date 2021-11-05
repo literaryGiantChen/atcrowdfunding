@@ -3,17 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <%@include file="/WEB-INF/include-head.jsp" %>
-<script type="text/javascript">
-    // 1.为分页操作准备初始化数据
-    window.pageNum = 1;
-    window.pageSize = 5;
-    window.keyword = "";
-
-    // 2.调用执行分页的函数，显示分页效果
-    generatePage();
-</script>
 <body>
-
 <%@ include file="/WEB-INF/include-nav.jsp" %>
 <div class="container-fluid">
     <div class="row">
@@ -79,5 +69,15 @@
 <%@include file="/WEB-INF/modal-role-add.jsp" %>
 <%@include file="/WEB-INF/modal-role-edit.jsp" %>
 <%@include file="/WEB-INF/modal-role-confirm.jsp" %>
+<script type="text/javascript" src="crowd/my-role.js"></script>
+<script type="text/javascript">
+    // 1.为分页操作准备初始化数据
+    window.pageNum = 1;
+    window.pageSize = 5;
+    window.keyword = "";
+
+    // 2.调用执行分页的函数，显示分页效果
+    generatePage();
+</script>
 </body>
 </html>
