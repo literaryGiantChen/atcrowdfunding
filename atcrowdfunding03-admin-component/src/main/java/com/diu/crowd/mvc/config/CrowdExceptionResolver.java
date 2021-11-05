@@ -2,6 +2,7 @@ package com.diu.crowd.mvc.config;
 
 import com.diu.crowd.constant.CrowdConstant;
 import com.diu.crowd.exception.AccessForbiddenException;
+import com.diu.crowd.exception.LoginAcctAlreadyInUseException;
 import com.diu.crowd.exception.LoginFailedException;
 import com.diu.crowd.utils.CrowdUtil;
 import com.diu.crowd.utils.ResultEntity;
@@ -24,11 +25,24 @@ import java.io.PrintWriter;
 public class CrowdExceptionResolver {
 
     /**
+     * 处理用户名重复异常
+     *
+     * @return 视图对象
+     */
+    @ExceptionHandler(value = LoginAcctAlreadyInUseException.class)
+    public ModelAndView resolveLoginAcctAlreadyInUseException(LoginAcctAlreadyInUseException loginAcctAlreadyInUseException, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // 只是指定当前异常对应的页面即可
+        String viewName = "admin-add";
+        return this.commonResolver(viewName, CrowdConstant.ATTR_NAME_EXCEPTION, loginAcctAlreadyInUseException, request, response);
+    }
+
+    /**
      * 未登录处理
      *
      * @return 视图对象
      */
     @ExceptionHandler(value = AccessForbiddenException.class)
+
     public ModelAndView resolverAccessForbiddenException(AccessForbiddenException accessForbiddenException, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String viewName = "admin-login";
         return this.commonResolver(viewName, CrowdConstant.ATTR_NAME_EXCEPTION, accessForbiddenException, request, response);

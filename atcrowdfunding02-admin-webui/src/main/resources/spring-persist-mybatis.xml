@@ -34,7 +34,7 @@
     <property name="plugins">
       <array>
         <!-- 配置PageHelper PageInterceptor-->
-        <bean class="com.github.pagehelper.PageInterceptor">
+        <bean class="com.github.pagehelper.PageHelper">
           <!-- 配置相关属性 -->
           <property name="properties">
             <props>

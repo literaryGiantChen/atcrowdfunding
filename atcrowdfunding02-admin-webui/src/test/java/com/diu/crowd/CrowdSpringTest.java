@@ -70,9 +70,9 @@ public class CrowdSpringTest {
 
     @Test
     public void test02() {
-        adminService.saveAdmin(new Admin(null, "Andrea", "andrea123", "安德莉亚", "andrea123@gamin.com", "2021-10-31"));
-        this.log.info("saveAdmin  ->> 执行成功！！！");
-        this.logger.info("{}", "saveAdmin  ->> 执行成功！！！");
+        for (int i = 0; i < 351; i++) {
+            adminMapper.insert(new Admin(null, "Edith" + i, CrowdUtil.md5("edith123" + i), "伊蒂丝" + i, "edith321" + i + "@gamin.com", "2021-11-04"));
+        }
     }
 
 }

@@ -83,7 +83,7 @@
     where
     `login_acct` like concat("%",#{keyword},"%") or
     `user_name` like concat("%",#{keyword},"%") or
-    `email` like concat("%",#{keyword},"%");
+    `email` like concat("%",#{keyword},"%")
   </select>
 
   <select id="selectByExample" parameterType="com.diu.crowd.entity.AdminExample" resultMap="BaseResultMap">

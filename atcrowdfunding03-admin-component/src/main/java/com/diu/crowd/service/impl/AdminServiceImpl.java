@@ -2,16 +2,19 @@ package com.diu.crowd.service.impl;
 
 import com.diu.crowd.constant.CrowdConstant;
 import com.diu.crowd.entity.Admin;
+import com.diu.crowd.exception.LoginAcctAlreadyInUseException;
 import com.diu.crowd.exception.LoginFailedException;
 import com.diu.crowd.mapper.AdminMapper;
 import com.diu.crowd.service.api.AdminService;
 import com.diu.crowd.utils.CrowdUtil;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,7 +37,35 @@ public class AdminServiceImpl implements AdminService {
         if (admin == null) {
             throw new NullPointerException();
         }
-        return adminMapper.insert(admin);
+
+        // 生成当前系统时间
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String createTime = format.format(date);
+        admin.setCreateTime(createTime);
+
+        // 考虑到该方法 是增加和修改共用的 所以做一下判断 密码没有值就是update操作
+        if (admin.getUserPswd() != null) {
+            // 将用户的密码加密
+            admin.setUserPswd(CrowdUtil.md5(admin.getUserPswd()));
+        } else {
+            throw new LoginAcctAlreadyInUseException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_PWD);
+        }
+
+        try {
+            // 前提是要在数据库中将账号该字段 设置唯一
+            // 执行保存，如果账户被占用会抛出异常
+            return adminMapper.insert(admin);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 检测当前捕获的异常对象，如果是 DuplicateKeyException 类型说明是账号重复导 致的
+            if (e instanceof DuplicateKeyException) {
+                // 抛出自定义的 LoginAcctAlreadyInUseException 异常
+                throw new LoginAcctAlreadyInUseException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_USE);
+            }
+            // 为了不掩盖问题，如果当前捕获到的不是 DuplicateKeyException 类型的异常，则 把当前捕获到的异常对象继续向上抛出
+            throw e;
+        }
     }
 
     @Override
@@ -81,7 +112,7 @@ public class AdminServiceImpl implements AdminService {
     public PageInfo<Admin> getAdminPageInfo(String keyword, Integer pageNum, Integer pageSize) {
 
         // 1.调用PageHelper的静态方法开启分页功能
-        Page<Admin> adminPage = PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
 
         // 2.执行查询
         List<Admin> adminLists = adminMapper.selectAdminByKeyword(keyword);
@@ -90,5 +121,19 @@ public class AdminServiceImpl implements AdminService {
         return new PageInfo<>(adminLists);
     }
 
+    @Override
+    public int remove(Integer adminId) {
+        return adminMapper.deleteByPrimaryKey(adminId);
+    }
+
+    @Override
+    public Admin getByAdminId(Integer adminId) {
+        return adminMapper.selectByPrimaryKey(adminId);
+    }
+
+    @Override
+    public int updateAdmin(Admin admin) {
+        return adminMapper.updateByPrimaryKeySelective(admin);
+    }
 
 }
