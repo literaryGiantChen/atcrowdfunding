@@ -45,7 +45,9 @@
 
   <mvc:view-controller path="/admin/to/add/page.html" view-name="admin-add"/>
 
-  <mvc:view-controller path="/role/to/main/page.html" view-name="role-page"/>
+  <mvc:view-controller path="/role/to/page.html" view-name="role-page"/>
+
+  <mvc:view-controller path="/menu/to/permission.html" view-name="menu-page"/>
 
   <mvc:interceptors>
     <mvc:interceptor>

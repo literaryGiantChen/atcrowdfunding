@@ -15,7 +15,6 @@ function showConfirmModal(roleArray) {
         var role = roleArray[i];
         var roleName = role.roleName;
         $("#roleNameDiv").append(roleName + "<br/>");
-
         var roleId = role.roleId;
 
         // 调用数组对象的push()方法存入新元素
@@ -65,7 +64,6 @@ function getPageInfoRemote() {
 
     // 从resultEntity中获取result属性
     var result = resultEntity.operationResult;
-    console.log(result);
 
     // 判断result是否成功
     if (result == "FAILED") {
@@ -75,7 +73,6 @@ function getPageInfoRemote() {
 
     // 确认result为成功后获取pageInfo
     var pageInfo = resultEntity.queryData;
-    console.log(pageInfo);
 
     // 返回pageInfo
     return pageInfo;
@@ -92,7 +89,7 @@ function fillTableBody(pageInfo) {
 
     // 判断pageInfo对象是否有效
     if (pageInfo == null || pageInfo == undefined || pageInfo.list == null || pageInfo.list.length == 0) {
-        $("#rolePageBody").append("<tr><td colspan='4' align='center'>抱歉！没有查询到您搜索的数据！</td></tr>");
+        $("#rolePageBody").append("<tr><td colspan='4' align='center'>Feel sorry! Did not find the data you searched for!</td></tr>");
         return;
     }
 
@@ -141,8 +138,8 @@ function generateNavigator(pageInfo) {
         "callback": paginationCallBack,
         "items_per_page": pageInfo.pageSize,
         "current_page": pageInfo.pageNum - 1,
-        "prev_text": "上一页",
-        "next_text": "下一页"
+        "prev_text": "prev page",
+        "next_text": "next page"
     }
 
     // 调用pagination()函数
