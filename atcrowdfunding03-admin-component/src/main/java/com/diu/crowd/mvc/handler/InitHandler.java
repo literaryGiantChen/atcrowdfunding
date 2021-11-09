@@ -34,7 +34,6 @@ public class InitHandler {
     public String getAll(Model model) {
         List<Admin> listsAdmin = adminService.getAll();
         model.addAttribute("listsAdmin", listsAdmin);
-        logger.info("getAll方法 --> 执行完毕 正在前往页面 > > >");
         return "ssm";
     }
 

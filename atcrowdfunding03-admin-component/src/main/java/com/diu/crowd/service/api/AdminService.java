@@ -70,4 +70,12 @@ public interface AdminService {
      * @return
      */
     public int updateAdmin(Admin admin);
+
+    /**
+     * 增加用户和角色之间的联系
+     *
+     * @param adminId
+     * @param roleIdList
+     */
+    public void saveAdminRoleRelationship(Integer adminId, List<Integer> roleIdList);
 }

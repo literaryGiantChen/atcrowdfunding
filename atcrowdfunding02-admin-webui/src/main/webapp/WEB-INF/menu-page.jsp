@@ -147,16 +147,40 @@
 
         // 删除功能，没有对话框，直接执行
         $("#treeDemo").on("click", ".removeBtn", function () {
+            // 将当前节点的 id 保存到全局变量
+            window.id = this.id;
+
+            // 获取 zTreeObj 对象
+            var zTreeObj = $.fn.zTree.getZTreeObj("treeDemo");
+
+            // 根据 id 属性查询节点对象
+            // 用来搜索节点的属性名
+            var key = "id";
+
+            // 用来搜索节点的属性值
+            var currentNode = zTreeObj.getNodeByParam(key, window.id);
+            $("#removeNodeSpan").html("【 <i class='" + currentNode.icon + "'></i>" + currentNode.name + "】");
+
+            // 打开模态框
+            $("#menuConfirmModal").modal("show");
+
+            return false;
+        });
+
+        $("#confirmBtn").click(function () {
             $.ajax({
                 "url": "menu/remove.json",
                 "type": "post",
-                "data": this.id,
+                "data": window.id,
                 "contentType": "application/json;charset=UTF-8",
                 "dataType": "json",
                 "success": function (response) {
                     var resultData = response.operationResult;
                     if (resultData === "SUCCESS") {
                         layer.msg("删除元素成功！！！");
+
+                        // 关闭模态框
+                        $("#menuConfirmModal").modal("hide");
 
                         // 删除完元素后，将该页面再次初始化一下
                         generateTree();
@@ -166,7 +190,6 @@
                     }
                 }
             });
-            return false;
         });
     });
 </script>

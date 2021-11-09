@@ -3,8 +3,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <%@include file="/WEB-INF/include-head.jsp" %>
-<link rel="stylesheet" href="css/pagination.css"/>
-<script type="text/javascript" src="jquery/jquery.pagination.js" charset="utf-8"></script>
 <body>
 <%@ include file="/WEB-INF/include-nav.jsp" %>
 <div class="container-fluid">
@@ -73,6 +71,11 @@
 <%@include file="/WEB-INF/modal-role-add.jsp" %>
 <%@include file="/WEB-INF/modal-role-edit.jsp" %>
 <%@include file="/WEB-INF/modal-role-confirm.jsp" %>
+<%@include file="/WEB-INF/modal-role-assign-auth.jsp" %>
+<link rel="stylesheet" href="css/pagination.css"/>
+<script type="text/javascript" src="jquery/jquery.pagination.js" charset="utf-8"></script>
+<link rel="stylesheet" href="ztree/zTreeStyle.css"/>
+<script type="text/javascript" src="ztree/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript" src="crowd/my-role.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
@@ -286,6 +289,68 @@
             showConfirmModal(roleArray);
         });
 
+
+        // 13.给分配权限按钮绑定单击响应函数
+        $("#rolePageBody").on("click", ".checkBtn", function () {
+            // 打开动态框
+            $("#assignModal").modal("show");
+
+            window.roleId = this.id;
+
+            // 在模态框中装载树 Auth 的形结构数据
+            fillAuthTree();
+        });
+
+        // 14.给分配权限模态框中的“分配”按钮绑定单击响应函数
+        $("#assignBtn").click(function () {
+            // ①收集树形结构的各个节点中被勾选的节点
+            // [1]声明一个专门的数组存放 id
+            var authIdArray = [];
+
+            // [2]获取 zTreeObj 对象
+            var zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
+
+            // [3]获取全部被勾选的节点
+            var checkedNodes = zTreeObj.getCheckedNodes();
+
+            // [4]遍历 checkedNodes
+            for (var i = 0; i < checkedNodes.length; i++) {
+                var authId = checkedNodes[i].id;
+                authIdArray.push(authId);
+            }
+
+            // ②发送请求执行分配
+            var requestBody = {
+                "authIdArray": authIdArray,
+                // 为了服务器端 handler 方法能够统一使用 List<Integer>方式接收数据，roleId 也存 入数组
+                "roleId": [window.roleId]
+            };
+            requestBody = JSON.stringify(requestBody);
+            console.log(requestBody);
+
+            $.ajax({
+                "url": "assign/do/role/assign/auth.json",
+                "type": "post",
+                "data": requestBody,
+                "contentType": "application/json;charset=UTF-8",
+                "dataType": "json",
+                "success": function (response) {
+                    var result = response.operationResult;
+                    if (result == "SUCCESS") {
+                        layer.msg("操作成功！");
+
+                        // 关闭动态框
+                        $("#assignModal").modal("hide");
+                    }
+                    if (result == "FAILED") {
+                        layer.msg("操作失败！" + response.message);
+                    }
+                },
+                "error": function (response) {
+                    layer.msg(response.status + " " + response.statusText);
+                }
+            });
+        });
     });
 </script>
 </body>

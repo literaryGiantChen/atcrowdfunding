@@ -46,4 +46,20 @@ public interface RoleService {
      */
     public void updateRole(Role role);
 
+    /**
+     * 获取用户拥有的角色
+     *
+     * @param adminId 用户Id
+     * @return
+     */
+    public List<Role> getAssignedRole(Integer adminId);
+
+    /**
+     * 获取用户没有的角色
+     *
+     * @param adminId 用户Id
+     * @return
+     */
+    public List<Role> getUnAssignedRole(Integer adminId);
+
 }

@@ -40,4 +40,7 @@ public interface AdminMapper {
 
     int updateByPrimaryKey(Admin record);
 
+    int deleteOLdRelationship(@Param("adminId") Integer adminId);
+
+    int insertNewRelationship(@Param("adminId") Integer adminId, @Param("roleIdList") List<Integer> roleIdList);
 }
