@@ -326,7 +326,6 @@
                 "roleId": [window.roleId]
             };
             requestBody = JSON.stringify(requestBody);
-            console.log(requestBody);
 
             $.ajax({
                 "url": "assign/do/role/assign/auth.json",
