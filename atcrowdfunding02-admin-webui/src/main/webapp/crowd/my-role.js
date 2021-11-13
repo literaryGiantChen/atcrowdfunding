@@ -222,7 +222,6 @@ function fillAuthTree() {
 
     // 从响应结果中获取 authIdArray
     var authIdArray = ajaxReturn.responseJSON.queryData;
-    console.log(authIdArray);
     // 6.根据 authIdArray 把树形结构中对应的节点勾选上
     // ①遍历 authIdArray
     for (var i = 0; i < authIdArray.length; i++) {
@@ -235,5 +234,4 @@ function fillAuthTree() {
         // 执行
         zTreeObj.checkNode(treeNode, checked, checkTypeFlag);
     }
-
 }

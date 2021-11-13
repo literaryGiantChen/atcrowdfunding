@@ -42,7 +42,6 @@ public class CrowdExceptionResolver {
      * @return 视图对象
      */
     @ExceptionHandler(value = AccessForbiddenException.class)
-
     public ModelAndView resolverAccessForbiddenException(AccessForbiddenException accessForbiddenException, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String viewName = "admin-login";
         return this.commonResolver(viewName, CrowdConstant.ATTR_NAME_EXCEPTION, accessForbiddenException, request, response);
@@ -89,6 +88,12 @@ public class CrowdExceptionResolver {
     public ModelAndView resolverNullPointerException(NullPointerException nullPointerException, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String viewName = "system-error";
         return this.commonResolver(viewName, CrowdConstant.ATTR_NAME_EXCEPTION, nullPointerException, request, response);
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ModelAndView resolverException(Exception Exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String viewName = "system-error";
+        return this.commonResolver(viewName, CrowdConstant.ATTR_NAME_EXCEPTION, Exception, request, response);
     }
 
     /**

@@ -1,0 +1,21 @@
+server:
+  port: 8198
+spring:
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/school?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=GMT
+  application:
+    name: atcrowdfunding09-Boot
+  thymeleaf:
+    prefix: classpath:/thymeleaf/
+    suffix: .html
+    cache: false #开发的时候禁用缓存
+# 不建议使用全局的日志输出方式debug 没有特殊要求尽可能使用info
+logging:
+  level:
+    com.diu.boot.controller: debug
+    com.diu.boot.test: debug
+mybatis:
+  mapper-locations: classpath*:/mybatis/mapper/*Mapper.xml

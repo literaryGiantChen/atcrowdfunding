@@ -15,8 +15,10 @@
         <%@ include file="/WEB-INF/include-sidebar.jsp" %>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ol class="breadcrumb">
-                <li><a href="#">首页</a></li>
-                <li><a href="#">数据列表</a></li>
+                <li><a href="admin/get/page.html">首页</a></li>
+                <li>
+                    <a href="admin/get/page.html?adminId=${param.adminId}&pageNum=${param.pageNum}&keyword=${param.keyword}">数据列表</a>
+                </li>
                 <li class="active">分配角色</li>
             </ol>
             <div class="panel panel-default">

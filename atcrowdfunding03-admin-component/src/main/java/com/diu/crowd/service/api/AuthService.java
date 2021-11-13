@@ -40,4 +40,12 @@ public interface AuthService {
      * @return
      */
     public void insertNewRelationship(Map<String, List<Integer>> map);
+
+    /**
+     * 根据 adminId 查询权限信息
+     *
+     * @param adminId
+     * @return
+     */
+    public List<String> getAssignedAuthNameByAdminId(Integer adminId);
 }

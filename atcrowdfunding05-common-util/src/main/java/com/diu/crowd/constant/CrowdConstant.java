@@ -13,8 +13,9 @@ public class CrowdConstant {
     public static final String MESSAGE_STRING_INVALIDATE = "字符串不合法！请不要传入空字符串！";
     public static final String MESSAGE_SYSTEM_ERROR_LOGIN_NOT_UNIQUE = "系统错误：登录账号不唯一！";
     public static final String MESSAGE_PWD_FAILED = "The password is wrong, please re-enter";
+    public static final String MESSAGE_ACCESS_DENIED = "抱歉！你没有权限访问该资源";
 
-    public static String ATTR_NAME_Null_EXCEPTION = "null_exception";
+    static String ATTR_NAME_Null_EXCEPTION = "null_exception";
     public static String ATTR_NAME_EXCEPTION = "exception";
     public static String ATTR_NAME_ARITHMETIC_EXCEPTION = "arithmetic_exception";
     public static String ATTR_NAME_LOGIN = "loginAdmin";

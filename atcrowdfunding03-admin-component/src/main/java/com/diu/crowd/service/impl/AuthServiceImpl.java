@@ -53,8 +53,13 @@ public class AuthServiceImpl implements AuthService {
 
         // 4.判断 authIdList 是否有效
         if (authIdList != null && authIdList.size() > 0) {
-            authMapper.insertNewRelationship(roleId, authIdList);
+            int result = authMapper.insertNewRelationship(roleId, authIdList);
         }
+    }
+
+    @Override
+    public List<String> getAssignedAuthNameByAdminId(Integer adminId) {
+        return authMapper.selectAssignedAuthNameByAdminId(adminId);
     }
 
 }

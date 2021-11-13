@@ -6,9 +6,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/aop
-       https://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
@@ -61,5 +61,8 @@
       <tx:method name="update*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
     </tx:attributes>
   </tx:advice>
+
+  <!-- 配置BCryptPasswordEncoder的bean -->
+  <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
 </beans>

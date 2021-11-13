@@ -1,0 +1,10 @@
+server:
+  port: 5000
+eureka:
+  instance:
+    hostname: 127.0.0.1         # 配置当前Eureka服务的主机地址
+  client:
+    register-with-eureka: false # 服务本身就是注册中心 不必”自己注册自己“
+    fetch-registry: false       # 服务本身就是注册中心 不必”从注册中获取信息“
+    service-url: #
+      defaultZone: Http://${eureka.instance.hostname}:${server.port}/eureka

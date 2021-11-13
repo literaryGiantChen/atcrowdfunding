@@ -78,4 +78,10 @@ public interface AdminService {
      * @param roleIdList
      */
     public void saveAdminRoleRelationship(Integer adminId, List<Integer> roleIdList);
+
+    /**
+     * @param username
+     * @return
+     */
+    public Admin getAdminByLoginAcct(String username);
 }

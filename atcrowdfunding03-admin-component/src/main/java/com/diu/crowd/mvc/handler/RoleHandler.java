@@ -5,6 +5,7 @@ import com.diu.crowd.service.api.RoleService;
 import com.diu.crowd.utils.ResultEntity;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class RoleHandler {
         this.roleService = roleService;
     }
 
+    @PreAuthorize("hasRole('部长')")
     @RequestMapping(value = "/role/get/page/info.json", method = RequestMethod.POST)
     public ResultEntity<PageInfo<Role>> getPageInfo(
             @RequestParam(value = "keyword", defaultValue = "") String keyword,

@@ -2,6 +2,7 @@ package com.diu.crowd.service.impl;
 
 import com.diu.crowd.constant.CrowdConstant;
 import com.diu.crowd.entity.Admin;
+import com.diu.crowd.entity.AdminExample;
 import com.diu.crowd.exception.LoginAcctAlreadyInUseException;
 import com.diu.crowd.exception.LoginFailedException;
 import com.diu.crowd.mapper.AdminMapper;
@@ -11,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -26,10 +28,12 @@ import java.util.Objects;
 public class AdminServiceImpl implements AdminService {
 
     public final AdminMapper adminMapper;
+    public final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public AdminServiceImpl(AdminMapper adminMapper) {
+    public AdminServiceImpl(AdminMapper adminMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.adminMapper = adminMapper;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -47,7 +51,7 @@ public class AdminServiceImpl implements AdminService {
         // 考虑到该方法 是增加和修改共用的 所以做一下判断 密码没有值就是update操作
         if (admin.getUserPswd() != null) {
             // 将用户的密码加密
-            admin.setUserPswd(CrowdUtil.md5(admin.getUserPswd()));
+            admin.setUserPswd(this.bCryptPasswordEncoder.encode(admin.getUserPswd()));
         } else {
             throw new LoginAcctAlreadyInUseException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_PWD);
         }
@@ -145,6 +149,16 @@ public class AdminServiceImpl implements AdminService {
         if (roleIdList != null && roleIdList.size() > 0) {
             int insertNewRelationship = adminMapper.insertNewRelationship(adminId, roleIdList);
         }
+    }
+
+    @Override
+    public Admin getAdminByLoginAcct(String username) {
+        AdminExample adminExample = new AdminExample();
+        AdminExample.Criteria criteria = adminExample.createCriteria();
+        criteria.andLoginAcctEqualTo(username);
+
+        List<Admin> adminList = adminMapper.selectByExample(adminExample);
+        return adminList.get(0);
     }
 
 }

@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,7 @@ public class MainHandler {
         return "admin-page";
     }
 
+    @PreAuthorize("hasAuthority('user:delete')")
     @RequestMapping(value = "/admin/remove/{adminId}/{pageNum}/{keyword}.html", method = RequestMethod.GET)
     public String removeAdmin(@PathVariable("adminId") Integer adminId,
                               @PathVariable("pageNum") Integer pageNum,
@@ -60,6 +62,7 @@ public class MainHandler {
         return "redirect:/admin/get/page.html?pageNum=" + pageNum + "&keyword=" + keyword;
     }
 
+    @PreAuthorize("hasAuthority('user:save')")
     @RequestMapping(value = "/admin/save.html", method = RequestMethod.POST)
     public String saveAdmin(Admin admin) {
         logger.info("保存用户信息：{}", admin);
@@ -70,6 +73,7 @@ public class MainHandler {
         return "redirect:/admin/get/page.html?pageNum=" + Integer.MAX_VALUE;
     }
 
+    @PreAuthorize("hasRole('次长') OR hasRole('部长')")
     @RequestMapping(value = "/admin/to/edit/page.html", method = RequestMethod.GET)
     public String updateAdmin(@RequestParam("adminId") Integer adminId,
                               @RequestParam("pageNum") String pageNum,
@@ -83,6 +87,7 @@ public class MainHandler {
         return "admin-edit";
     }
 
+    @PreAuthorize("hasRole('次长') OR hasRole('部长')")
     @RequestMapping(value = "/admin/update.html", method = RequestMethod.POST)
     public String adminUpdateAndSave(Admin admin,
                                      @RequestParam("pageNum") String pageNum,
