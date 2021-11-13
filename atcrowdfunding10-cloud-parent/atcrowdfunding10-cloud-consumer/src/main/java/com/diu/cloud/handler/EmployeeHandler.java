@@ -21,9 +21,9 @@ public class EmployeeHandler {
         this.restTemplate = restTemplate;
     }
 
-    @RequestMapping(value = "/consumer/get/employee/remote", method = RequestMethod.GET)
+    @RequestMapping(value = "/consumer/ribbon/get/employee/remote", method = RequestMethod.GET)
     public Employee getEmployeeRemote() {
-        return restTemplate.getForObject("Http://localhost:1000/provider/get/employee/remote", Employee.class);
+        return restTemplate.getForObject("http://DIU-PROVIDER/provider/get/employee/remote", Employee.class);
     }
 
 }
